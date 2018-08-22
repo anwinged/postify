@@ -1,0 +1,23 @@
+{
+
+  "manifest_version": 2,
+  "name": "Postify",
+  "version": "1.0",
+ 
+  "description": "Post current url to external web-server.",
+
+  "applications": {
+    "gecko": {
+      "id": "postify@mozilla.org",
+      "strict_min_version": "45.0"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["postify.js"]
+    }
+  ]
+
+}
