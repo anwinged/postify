@@ -9,18 +9,15 @@
       "strict_min_version": "45.0"
     }
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.mozilla.org/*"
-      ],
-      "js": [
-        "postify.js"
-      ]
-    }
+  "permissions": [
+    "activeTab",
+    "tabs"
   ],
+  "background": {
+    "scripts": ["postify.js"]
+  },
   "browser_action": {
     "default_icon": "icons/postify-32.png",
-    "default_title": "Beastify"
+    "default_title": "Postify"
   }
 }
