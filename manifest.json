@@ -16,6 +16,7 @@
     "activeTab",
     "notifications",
     "storage",
+    "webRequest",
     "<all_urls>"
   ],
   "background": {

@@ -34,18 +34,22 @@ function restoreOptions() {
     );
 }
 
-function saveOptions(evt) {
-    evt.preventDefault();
-    var patterns = [];
+function parseForm() {
+    var formData = [];
     var rows = document.querySelectorAll(".js-pattern-rows tr");
     rows.forEach(row => {
         var server = row.querySelector('[name="server"]').value;
         var pattern = row.querySelector('[name="pattern"]').value;
-        if (server) {
-            patterns.push({server: server, pattern: pattern});
-        }
-    });
+        formData.push({server: server, pattern: pattern});
+    });    
+    return formData;
+}
 
+function saveOptions(evt) {
+    evt.preventDefault();
+    var formData = parseForm();
+    var filter = item => item.server;
+    var patterns = formData.filter(filter);
     PatternStorage.set(patterns);
 }
 

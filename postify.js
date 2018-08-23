@@ -1,15 +1,28 @@
 const APP_NAME = 'Postify';
-const SERVER_ADDR = 'http://127.0.0.1:9999';
 
 function sendUrl(url) {
-    browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/postify-48.png"),
-        "title": APP_NAME,
-        "message": url,
-    });
+    // browser.notifications.create({
+    //     "type": "basic",
+    //     "iconUrl": browser.extension.getURL("icons/postify-48.png"),
+    //     "title": APP_NAME,
+    //     "message": url,
+    // });
 
-    fetch(SERVER_ADDR, {
+    function sendUrlToServers(patterns) {
+        patterns.forEach(item => {
+            var regex = new RegExp(item.pattern || '.*', 'i');
+            if (regex.test(url) && item.server) {
+                console.log('SEND', url, 'TO', item.server);
+                sendUrlToServer(url, item.server);
+            }
+        });
+    }
+
+    var patterns = PatternStorage.get().then(sendUrlToServers);
+}
+
+function sendUrlToServer(url, addr) {
+    fetch(addr, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
