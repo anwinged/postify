@@ -12,7 +12,8 @@
   "permissions": [
     "activeTab",
     "notifications",
-    "tabs"
+    "tabs",
+    "<all_urls>"
   ],
   "background": {
     "scripts": ["postify.js"]
