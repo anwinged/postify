@@ -5,51 +5,33 @@ const PATTERN_ROW = (addr, pattern) => `
 </tr>
 `;
 
+function defaultPatterns() {
+	return [
+		{ server: '', pattern: '.*' },
+	];
+}
+
+function setPatterns(patterns) {
+	if (!patterns || patterns.length === 0) {
+		patterns = defaultPatterns();
+	}
+
+	console.log('PATTERNS', patterns);
+
+	var reducer = (acc, item) => acc + PATTERN_ROW(item.server, item.pattern);
+
+	var html = patterns.reduce(reducer, '');
+
+	document.querySelector(".js-pattern-rows").innerHTML = html;
+}
+
 function restoreOptions() {
-
-	function parseJsonPatterns(jsonPatterns) {
-		console.log('JSON PATTERNS', jsonPatterns);
-
-		if (!jsonPatterns.patterns) {
-			return [];
+	PatternStorage.get().then(
+		setPatterns,
+		(error) => {
+			console.log(`Error: ${error}`)
 		}
-		try {
-			return JSON.parse(jsonPatterns.patterns);
-		} catch (e) {
-			return [];
-		}
-	}
-
-	function defaultPatterns() {
-		return [
-			{server: '', pattern: '.*'},
-		];
-	}
-
-	function setPatterns(jsonPatterns) {
-		patterns = parseJsonPatterns(jsonPatterns);
-
-		if (patterns.length === 0) {
-			patterns = defaultPatterns();
-		}
-
-		console.log('PATTERNS', patterns);
-
-		var html = '';
-
-		patterns.forEach(item => {
-			html += PATTERN_ROW(item.server, item.pattern);
-		});
-
-		document.querySelector(".js-pattern-rows").innerHTML = html;
-	}
-
-  	function onError(error) {
-    	console.log(`Error: ${error}`);
-  	}
-
-	var getting = browser.storage.local.get("patterns");	
-	getting.then(setPatterns, onError);
+	);
 }
 
 function saveOptions(evt) {
@@ -59,19 +41,18 @@ function saveOptions(evt) {
 	rows.forEach(row => {
 		var server = row.querySelector('[name="server"]').value;
 		var pattern = row.querySelector('[name="pattern"]').value;
-		patterns.push({server: server, pattern: pattern});
+		if (server) {
+			patterns.push({server: server, pattern: pattern});
+		}
 	});
 
-	console.log('PATTERNS', patterns);
-
-	browser.storage.local.set({ patterns: JSON.stringify(patterns) });
+	PatternStorage.set(patterns);
 }
 
 function addRow(evt) {
 	evt.preventDefault();
-	var html = document.querySelector(".js-pattern-rows").innerHTML;
-	html += PATTERN_ROW('', '');
-	document.querySelector(".js-pattern-rows").innerHTML = html;
+	var el = document.querySelector(".js-pattern-rows");
+	el.innerHTML += PATTERN_ROW('', '');
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
