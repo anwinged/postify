@@ -1,17 +1,18 @@
-console.log('Load!');
+const APP_NAME = 'Postify';
 
-function onGot(tabInfo) {
-	var tab = tabInfo[0];
-	var url = tab.url;
-  	console.log(url);
+function sendUrl(url) {
+	browser.notifications.create({
+    	"type": "basic",
+    	"iconUrl": browser.extension.getURL("icons/postify-48.png"),
+    	"title": APP_NAME,
+    	"message": url,
+	});
 }
 
-function onError(error) {
-	console.log(`Error: ${error}`);
-}
-
-function sendCurrentUrl() {
-	browser.tabs.query({currentWindow: true, active: true}).then(onGot, onError);
+function sendCurrentUrl(args) {
+	if (args.url) {
+		sendUrl(args.url)
+	}
 }
 
 browser.browserAction.onClicked.addListener(sendCurrentUrl);

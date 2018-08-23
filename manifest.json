@@ -11,6 +11,7 @@
   },
   "permissions": [
     "activeTab",
+    "notifications",
     "tabs"
   ],
   "background": {
@@ -19,5 +20,12 @@
   "browser_action": {
     "default_icon": "icons/postify-32.png",
     "default_title": "Postify"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D"
+      }
+    }
   }
 }
