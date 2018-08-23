@@ -3,6 +3,9 @@
   "name": "Postify",
   "version": "1.0",
   "description": "Post current url to external web-server.",
+  "icons": {
+    "48": "icons/postify-48.png"
+  },
   "applications": {
     "gecko": {
       "id": "postify@mozilla.org",
@@ -13,10 +16,11 @@
     "activeTab",
     "notifications",
     "tabs",
+    "storage",
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["postify.js"]
+    "scripts": ["storage.js", "postify.js"]
   },
   "browser_action": {
     "default_icon": "icons/postify-32.png",
@@ -28,5 +32,8 @@
         "default": "Ctrl+Shift+D"
       }
     }
+  },
+  "options_ui": {
+    "page": "options.html"
   }
 }
