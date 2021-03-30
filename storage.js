@@ -1,6 +1,6 @@
 function PropertyStorage(name) {
-    parse = function (data) {
-        var propertyData = data[name];
+    const parse = function (data) {
+        const propertyData = data[name];
         if (!propertyData) {
             return null;
         }
@@ -12,7 +12,7 @@ function PropertyStorage(name) {
     };
 
     this.get = function () {
-        var getting = browser.storage.local.get(name);
+        const getting = browser.storage.local.get(name);
         return getting.then(parse);
     };
 

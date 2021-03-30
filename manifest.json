@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Postify",
-  "version": "1.0",
+  "version": "1.0.6",
   "description": "Post current url to external web-server.",
   "icons": {
     "48": "icons/postify-48.png"
@@ -17,7 +17,7 @@
     "notifications",
     "storage",
     "webRequest",
-    "<all_urls>"
+    "*://localhost/*"
   ],
   "background": {
     "scripts": ["storage.js", "postify.js"]

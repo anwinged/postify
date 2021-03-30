@@ -18,9 +18,9 @@ function setPatterns(patterns) {
 
     console.log('PATTERNS', patterns);
 
-    var reducer = (acc, item) => acc + PATTERN_ROW(item.server, item.pattern);
+    const reducer = (acc, item) => acc + PATTERN_ROW(item.server, item.pattern);
 
-    var html = patterns.reduce(reducer, '');
+    const html = patterns.reduce(reducer, '');
 
     document.querySelector(".js-pattern-rows").innerHTML = html;
 }
@@ -35,8 +35,8 @@ function restoreOptions() {
 }
 
 function parseForm() {
-    var formData = [];
-    var rows = document.querySelectorAll(".js-pattern-rows tr");
+    const formData = [];
+    const rows = document.querySelectorAll(".js-pattern-rows tr");
     rows.forEach(row => {
         var server = row.querySelector('[name="server"]').value;
         var pattern = row.querySelector('[name="pattern"]').value;
@@ -47,15 +47,15 @@ function parseForm() {
 
 function saveOptions(evt) {
     evt.preventDefault();
-    var formData = parseForm();
-    var filter = item => item.server;
-    var patterns = formData.filter(filter);
+    const formData = parseForm();
+    const filter = item => item.server;
+    const patterns = formData.filter(filter);
     PatternStorage.set(patterns);
 }
 
 function addRow(evt) {
     evt.preventDefault();
-    var el = document.querySelector(".js-pattern-rows");
+    const el = document.querySelector(".js-pattern-rows");
     el.innerHTML += PATTERN_ROW('', '');
 }
 

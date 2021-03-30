@@ -1,6 +1,7 @@
 const APP_NAME = 'Postify';
 
 function sendUrlToServer(url, addr) {
+    console.log('Send url to server', url, addr);
     return fetch(addr, {
         method: 'POST',
         headers: {
@@ -34,7 +35,7 @@ function showNotification(url, addr) {
 
 function sendUrlToServers(url, patterns) {
     patterns.forEach(item => {
-        var regex = new RegExp(item.pattern || '.*', 'i');
+        const regex = new RegExp(item.pattern || '.*', 'i');
         if (regex.test(url) && item.server) {
             sendUrlToServer(url, item.server).then(
                 () => showNotification(url, item.server),
